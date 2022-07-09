@@ -27,8 +27,11 @@ export const OrderBookContainer = () => {
         w.addEventListener('message', function (event) {
             const parsed = JSON.parse(event.data)
             if (parsed.event) return
-
-            if (!parsed.event) {
+            if (typeof parsed?.[1]?.[0] === 'object') {
+                parsed?.[1].forEach((parsedItem: any) => {
+                    data.push([parsed?.[0], parsedItem])
+                })
+            } else {
                 data.push(parsed)
             }
         });

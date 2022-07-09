@@ -24,6 +24,10 @@ export const orderBookDataSlice = createSlice({
                 const [, msg] = value
 
                 const pp = {price: msg[0], cnt: msg[1], amount: msg[2]}
+                if (msg === 'hb') {
+                    continue;
+                }
+
                 const side = pp.amount >= 0 ? BIDS : ASKS;
 
                 pp.amount = Math.abs(pp.amount)
