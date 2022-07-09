@@ -3,7 +3,6 @@
 - how green or red lights are working
 - how background green and red bars are generated
 - how price should be removed 
-- in some cases NaN comes and h for price
 
 # TODO
 - define types
