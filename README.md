@@ -6,8 +6,9 @@
 
 # TODO
 - connect to redux
-- UI component/container separation
+- UI component/container separation (some is done)
 - precision logic
+- define types
 
 most info I found here, but it was not so clear to implement all logic
 https://gist.github.com/prdn/b8c067c758aab7fa3bf715101086b47c
