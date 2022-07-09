@@ -1,5 +1,6 @@
 import React from "react";
 import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/OrderBookTableComponent";
+import {ASKS, BIDS} from "../../constants/appConstants";
 
 export const OrderBookContainer = () => {
     const [precision, setPrecision] = React.useState(1);
@@ -20,7 +21,7 @@ export const OrderBookContainer = () => {
                 const [_, msg] = value
 
                 const pp = {price: msg[0], cnt: msg[1], amount: msg[2]}
-                let side = pp.amount >= 0 ? 'bids' : 'asks';
+                let side = pp.amount >= 0 ? BIDS : ASKS;
 
                 pp.amount = Math.abs(pp.amount)
                 if (side === 'bids') {
@@ -81,14 +82,12 @@ export const OrderBookContainer = () => {
                 <button onClick={() => setThrottle(5000)}>~5000</button>
             </div>
             <OrderBookTableComponent
-                asksBids={Object.keys(bids).sort(function (a, b) {
-                    return +a >= +b ? -1 : 1
-                })}
+                side={BIDS}
+                asksBids={bids}
             />
             <OrderBookTableComponent
-                asksBids={Object.keys(asks).sort(function (a, b) {
-                    return +a <= +b ? -1 : 1
-                })}
+                side={ASKS}
+                asksBids={asks}
             />
         </div>
     );

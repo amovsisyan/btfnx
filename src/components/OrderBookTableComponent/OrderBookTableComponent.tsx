@@ -1,11 +1,13 @@
 import React from "react";
+import {ASKS, BIDS} from "../../constants/appConstants";
 
 interface IOrderBookTableComponent {
-    asksBids: any[]
+    asksBids: any
+    side: typeof BIDS | typeof ASKS
 }
 
 export const OrderBookTableComponent: React.FC<IOrderBookTableComponent> = (props) => {
-    const { asksBids } = props;
+    const { asksBids, side } = props;
     return <table>
         <tr>
             <th>
@@ -19,7 +21,13 @@ export const OrderBookTableComponent: React.FC<IOrderBookTableComponent> = (prop
             </th>
         </tr>
         {
-            asksBids.map((price) => (
+            Object.keys(asksBids).sort(function (a, b) {
+                if (side === BIDS) {
+                    return +a >= +b ? -1 : 1
+                }
+
+                return +a <= +b ? -1 : 1
+            }).map((price) => (
                 <tr>
                     <td>{asksBids[price].cnt}</td>
                     <td>{Math.round((asksBids[price].amount + Number.EPSILON) * 1000) / 1000}</td>
