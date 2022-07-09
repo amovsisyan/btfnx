@@ -3,7 +3,7 @@ import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/
 import {API_URL, ASKS, BIDS} from "../../constants/appConstants";
 import {useSelector, useDispatch} from "react-redux";
 import {getPrecision, getThrottle, setThrottle, setPrecision} from "../../features/orderBookConfig/orderBookConfigSlice";
-import {addBidsAndAsks, getAsks, getBids, resetData} from "../../features/orderBookData/orderBookConfigSlice";
+import {addBidsAndAsks, getAsks, getBids, resetData} from "../../features/orderBookData/orderBookDataSlice";
 import {OrderBookControlComponent} from "../../components/OrderBookControlComponent/OrderBookControlComponent";
 
 export const OrderBookContainer = () => {
