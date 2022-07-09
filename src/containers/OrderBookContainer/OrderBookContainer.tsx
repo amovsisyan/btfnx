@@ -2,14 +2,14 @@ import React from "react";
 import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/OrderBookTableComponent";
 import {ASKS, BIDS} from "../../constants/appConstants";
 import {useSelector, useDispatch} from "react-redux";
-import {getThrottle, setThrottle} from "../../features/orderBookConfig/orderBookConfigSlice";
+import {getPrecision, getThrottle, setThrottle, setPrecision} from "../../features/orderBookConfig/orderBookConfigSlice";
 import {OrderBookControlComponent} from "../../components/OrderBookControlComponent/OrderBookControlComponent";
 
 export const OrderBookContainer = () => {
     const throttle = useSelector(getThrottle)
+    const precision = useSelector(getPrecision)
     const dispatch = useDispatch()
 
-    const [precision, setPrecision] = React.useState(1);
     const [bids, setBids]: any = React.useState({});
     const [asks, setAsks]: any = React.useState({});
 
@@ -71,15 +71,19 @@ export const OrderBookContainer = () => {
         };
     }, [throttle, precision])
 
-    const _setThrottle = (throttle: number) => {
+    const _setThrottle = (throttle: number): void => {
         dispatch(setThrottle(throttle))
+    }
+
+    const _setPrecision = (precision: number): void => {
+        dispatch(setPrecision(precision))
     }
 
     return (
         <div>
             <OrderBookControlComponent
                 precision={precision}
-                setPrecision={setPrecision}
+                setPrecision={_setPrecision}
                 throttle={throttle}
                 setThrottle={_setThrottle}
             />
