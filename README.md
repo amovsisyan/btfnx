@@ -1,3 +1,17 @@
+# What was unclear
+- how to change something in price group item, if that already exists
+- how green or red lights are working
+- how background green and red bars are generated
+- how price should be removed 
+
+# TODO
+- connect to redux
+- UI component/container separation
+- precision logic
+
+most info I found here, but it was not so clear to implement all logic
+https://gist.github.com/prdn/b8c067c758aab7fa3bf715101086b47c
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
