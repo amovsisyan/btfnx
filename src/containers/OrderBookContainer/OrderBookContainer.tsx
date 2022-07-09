@@ -1,42 +1,24 @@
 import React from "react";
 import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/OrderBookTableComponent";
-import {ASKS, BIDS} from "../../constants/appConstants";
+import {API_URL, ASKS, BIDS} from "../../constants/appConstants";
 import {useSelector, useDispatch} from "react-redux";
 import {getPrecision, getThrottle, setThrottle, setPrecision} from "../../features/orderBookConfig/orderBookConfigSlice";
+import {addBidsAndAsks, getAsks, getBids} from "../../features/orderBookData/orderBookConfigSlice";
 import {OrderBookControlComponent} from "../../components/OrderBookControlComponent/OrderBookControlComponent";
 
 export const OrderBookContainer = () => {
     const throttle = useSelector(getThrottle)
     const precision = useSelector(getPrecision)
+    const bids = useSelector(getBids)
+    const asks = useSelector(getAsks)
     const dispatch = useDispatch()
 
-    const [bids, setBids]: any = React.useState({});
-    const [asks, setAsks]: any = React.useState({});
-
     React.useEffect(() => {
-        const w = new WebSocket('wss://api-pub.bitfinex.com/ws/2')
+        const w = new WebSocket(API_URL)
 
         const data = new Set();
         const flush = () => {
-            console.log(data, 9999);
-            const existingBids = {...bids};
-            const existingAsks = {...asks};
-            // @ts-ignore
-            for (const value of data) {
-                const [_, msg] = value
-
-                const pp = {price: msg[0], cnt: msg[1], amount: msg[2]}
-                let side = pp.amount >= 0 ? BIDS : ASKS;
-
-                pp.amount = Math.abs(pp.amount)
-                if (side === 'bids') {
-                    existingBids[pp.price] = pp;
-                    setBids(existingBids)
-                } else {
-                    existingAsks[pp.price] = pp;
-                    setAsks(existingAsks)
-                }
-            }
+            dispatch(addBidsAndAsks(data))
             data.clear();
         };
 
@@ -69,7 +51,7 @@ export const OrderBookContainer = () => {
             w.close();
             flush();
         };
-    }, [throttle, precision])
+    }, [throttle, precision, dispatch])
 
     const _setThrottle = (throttle: number): void => {
         dispatch(setThrottle(throttle))

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import orderBookConfigReducer from './features/orderBookConfig/orderBookConfigSlice'
+import orderBookDataReducer from './features/orderBookData/orderBookConfigSlice'
 
 export const store = configureStore({
     reducer: {
-        orderBookConfig: orderBookConfigReducer
+        orderBookConfig: orderBookConfigReducer,
+        orderBookData: orderBookDataReducer
     },
 })
 

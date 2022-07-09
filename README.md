@@ -5,7 +5,6 @@
 - how price should be removed 
 
 # TODO
-- UI component/container separation (some is done)
 - precision logic
 - define types
 

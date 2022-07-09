@@ -1,4 +1,3 @@
-import {setThrottle} from "../../features/orderBookConfig/orderBookConfigSlice";
 import React from "react";
 
 interface IOrderBookControlComponent {
