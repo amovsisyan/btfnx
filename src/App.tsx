@@ -13,6 +13,8 @@ function App() {
         const data = new Set();
         const flush = () => {
             console.log(data, 9999);
+            const existingBids = {...bids};
+            const existingAsks = {...asks};
             // @ts-ignore
             for (const value of data) {
                 const [channel, msg] = value
@@ -20,7 +22,14 @@ function App() {
                 const pp = { price: msg[0], cnt: msg[1], amount: msg[2] }
                 let side = pp.amount >= 0 ? 'bids' : 'asks';
 
-                console.log(pp);
+                pp.amount = Math.abs(pp.amount)
+                if (side === 'bids') {
+                    existingBids[pp.price] = pp;
+                    setBids(existingBids)
+                } else {
+                    existingAsks[pp.price] = pp;
+                    setAsks(existingAsks)
+                }
             }
             data.clear();
         };
@@ -73,17 +82,51 @@ function App() {
             </div>
             <table>
                 <tr>
-                    <th>Count</th>
-                    <th>Amount</th>
-                    <th>Total</th>
-                    <th>Price</th>
+                    <th>
+                        Count
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Price
+                    </th>
                 </tr>
+                    {
+                        Object.keys(bids).sort(function (a, b) {
+                            return +a >= +b ? -1 : 1
+                        }).map((price) => (
+                            <tr>
+                                <td>{bids[price].cnt}</td>
+                                <td>{Math.round((bids[price].amount + Number.EPSILON) * 1000) / 1000}</td>
+                                <td>{bids[price].price}</td>
+                            </tr>
+                        ))
+                    }
+            </table>
+            <table>
                 <tr>
-                    <td>1</td>
-                    <td>200</td>
-                    <td>400</td>
-                    <td>21000</td>
+                    <th>
+                        Count
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Price
+                    </th>
                 </tr>
+                    {
+                        Object.keys(asks).sort(function (a, b) {
+                            return +a <= +b ? -1 : 1
+                        }).map((price) => (
+                            <tr>
+                                <td>{asks[price].cnt}</td>
+                                <td>{Math.round((asks[price].amount + Number.EPSILON) * 1000) / 1000}</td>
+                                <td>{asks[price].price}</td>
+                            </tr>
+                        ))
+                    }
             </table>
         </div>
     );
