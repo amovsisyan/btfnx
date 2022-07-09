@@ -1,10 +1,15 @@
 import React from "react";
 import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/OrderBookTableComponent";
 import {ASKS, BIDS} from "../../constants/appConstants";
+import {useSelector, useDispatch} from "react-redux";
+import {getThrottle, setThrottle} from "../../features/orderBookConfig/orderBookConfigSlice";
+import {OrderBookControlComponent} from "../../components/OrderBookControlComponent/OrderBookControlComponent";
 
 export const OrderBookContainer = () => {
+    const throttle = useSelector(getThrottle)
+    const dispatch = useDispatch()
+
     const [precision, setPrecision] = React.useState(1);
-    const [throttle, setThrottle] = React.useState(200);
     const [bids, setBids]: any = React.useState({});
     const [asks, setAsks]: any = React.useState({});
 
@@ -66,21 +71,18 @@ export const OrderBookContainer = () => {
         };
     }, [throttle, precision])
 
+    const _setThrottle = (throttle: number) => {
+        dispatch(setThrottle(throttle))
+    }
+
     return (
         <div>
-            <div>
-                <p>Precision level {precision}</p>
-                <button onClick={() => setPrecision(1)}>1</button>
-                <button onClick={() => setPrecision(2)}>2</button>
-                <button onClick={() => setPrecision(3)}>3</button>
-                <button onClick={() => setPrecision(4)}>4</button>
-                <button onClick={() => setPrecision(5)}>5</button>
-            </div>
-            <div>
-                <p>Throttle {throttle < 300 ? 0 : throttle}</p>
-                <button onClick={() => setThrottle(200)}>No</button>
-                <button onClick={() => setThrottle(5000)}>~5000</button>
-            </div>
+            <OrderBookControlComponent
+                precision={precision}
+                setPrecision={setPrecision}
+                throttle={throttle}
+                setThrottle={_setThrottle}
+            />
             <OrderBookTableComponent
                 side={BIDS}
                 asksBids={bids}

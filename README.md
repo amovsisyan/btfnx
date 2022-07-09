@@ -5,7 +5,6 @@
 - how price should be removed 
 
 # TODO
-- connect to redux
 - UI component/container separation (some is done)
 - precision logic
 - define types
