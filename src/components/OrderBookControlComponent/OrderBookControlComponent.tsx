@@ -1,8 +1,9 @@
 import React from "react";
+import {PRECISIONS} from "../../constants/appConstants";
 
 interface IOrderBookControlComponent {
-    precision: number
-    setPrecision: (precision: number) => void
+    precision: string
+    setPrecision: (precision: string) => void
     throttle: number
     setThrottle: (precision: number) => void
 }
@@ -14,11 +15,13 @@ export const OrderBookControlComponent: React.FC<IOrderBookControlComponent> = (
         <>
             <div>
                 <p>Precision level {precision}</p>
-                <button onClick={() => setPrecision(1)}>1</button>
-                <button onClick={() => setPrecision(2)}>2</button>
-                <button onClick={() => setPrecision(3)}>3</button>
-                <button onClick={() => setPrecision(4)}>4</button>
-                <button onClick={() => setPrecision(5)}>5</button>
+                {
+                    Object.keys(PRECISIONS).map(precision => {
+                        return (
+                            <button onClick={() => setPrecision(precision)}>{precision}</button>
+                        );
+                    })
+                }
             </div>
             <div>
                 <p>Throttle {throttle < 300 ? 0 : throttle}</p>

@@ -33,11 +33,15 @@ export const orderBookDataSlice = createSlice({
                     state.asks[pp.price] = pp;
                 }
             }
-        }
+        },
+        resetData: (state) => {
+            state.bids = default_BIDS;
+            state.asks = default_ASKS;
+        },
     },
 })
 
-export const { addBidsAndAsks } = orderBookDataSlice.actions
+export const { addBidsAndAsks, resetData } = orderBookDataSlice.actions
 
 // selectors
 export const getBids = (state: RootState) => state.orderBookData.bids

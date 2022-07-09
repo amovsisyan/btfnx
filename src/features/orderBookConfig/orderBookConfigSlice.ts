@@ -5,7 +5,7 @@ import {RootState} from "../../store";
 
 export interface OrderBookConfigState {
     throttle: number
-    precision: number
+    precision: string
 }
 
 const initialState: OrderBookConfigState = {
@@ -20,7 +20,7 @@ export const orderBookConfigSlice = createSlice({
         setThrottle: (state, action: PayloadAction<number>) => {
             state.throttle = action.payload
         },
-        setPrecision: (state, action: PayloadAction<number>) => {
+        setPrecision: (state, action: PayloadAction<string>) => {
             state.precision = action.payload
         },
     },

@@ -3,7 +3,7 @@ import {OrderBookTableComponent} from "../../components/OrderBookTableComponent/
 import {API_URL, ASKS, BIDS} from "../../constants/appConstants";
 import {useSelector, useDispatch} from "react-redux";
 import {getPrecision, getThrottle, setThrottle, setPrecision} from "../../features/orderBookConfig/orderBookConfigSlice";
-import {addBidsAndAsks, getAsks, getBids} from "../../features/orderBookData/orderBookConfigSlice";
+import {addBidsAndAsks, getAsks, getBids, resetData} from "../../features/orderBookData/orderBookConfigSlice";
 import {OrderBookControlComponent} from "../../components/OrderBookControlComponent/OrderBookControlComponent";
 
 export const OrderBookContainer = () => {
@@ -38,7 +38,7 @@ export const OrderBookContainer = () => {
                 event: 'subscribe',
                 channel: 'book',
                 symbol: 'tBTCUSD',
-                // prec: precision,
+                prec: precision,
             }))
         });
 
@@ -46,6 +46,7 @@ export const OrderBookContainer = () => {
             w.close();
         })
 
+        // todo if precision changes do not flush on unmount
         return () => {
             clearInterval(timer);
             w.close();
@@ -57,8 +58,9 @@ export const OrderBookContainer = () => {
         dispatch(setThrottle(throttle))
     }
 
-    const _setPrecision = (precision: number): void => {
+    const _setPrecision = (precision: string): void => {
         dispatch(setPrecision(precision))
+        dispatch(resetData())
     }
 
     return (
