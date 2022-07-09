@@ -16,10 +16,10 @@ export const OrderBookContainer = () => {
     React.useEffect(() => {
         const w = new WebSocket(API_URL)
 
-        const data = new Set();
+        let data: any[] = [];
         const flush = () => {
             dispatch(addBidsAndAsks(data))
-            data.clear();
+            data = [];
         };
 
         let timer = setInterval(flush, throttle);
@@ -29,7 +29,7 @@ export const OrderBookContainer = () => {
             if (parsed.event) return
 
             if (!parsed.event) {
-                data.add(parsed);
+                data.push(parsed)
             }
         });
 

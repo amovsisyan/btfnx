@@ -18,7 +18,7 @@ export const orderBookDataSlice = createSlice({
     name: 'orderBookData',
     initialState,
     reducers: {
-        addBidsAndAsks: (state, action: PayloadAction<any>) => {
+        addBidsAndAsks: (state, action: PayloadAction<any[]>) => {
             // @ts-ignore
             for (const value of action.payload) {
                 const [, msg] = value
